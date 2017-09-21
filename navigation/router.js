@@ -6,10 +6,10 @@ StyleSheet,
 Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-let msgList = [{"title":"Lektier til imorgen","msg":"Til imorgen skal i spise 4 flødeboller fra netto samt 1/2 liter mælk","sender":"Leo Messi","date":"2017-10-02T12:02:00.000Z"},{"title":"Lektier til på tirsdag","msg":"Læs bogen Sapien - en kort historie om menneskeheden ","sender":"Thiago","date":"2017-10-13T12:02:00.000Z"},{"title":"Aflyst time","msg":"Barcelona spiller imorgen og timen er defor selvfølgelig aflyst","sender":"Xavi","date":"2017-10-02T14:02:00.000Z"}];
+let msgList = [{"title":"Lektier til imorgen","msg":"Læs . s. 10 - 277 i Java Software Solutions Eighth edition","sender":"Leo Messi","date":"2017-10-02T12:02:00.000Z", "iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/158023.png"},{"title":"Lektier til på tirsdag","msg":"Læs bogen Sapiens - en kort historie om menneskeheden ","sender":"Thiago","date":"2017-10-13T12:02:00.000Z" ,"iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/189509.png"},{"title":"Aflyst time","msg":"Barcelona spiller imorgen og timen er defor selvfølgelig aflyst","sender":"Xavi","date":"2017-10-02T14:02:00.000Z", "iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/10535.png"},{"title":"Vigtigt!","msg":"Forza Lundtofte Boldklub","sender":"Claus Abildgaard","date":"2017-10-02T12:02:00.000Z", "iconUrl":""}];
 
 //read msg
-import { Container, Header, Content, Card, CardItem,Button, Thumbnail, Text, Icon, Left, Body } from 'native-base';
+import { Container, Header, Content, Card, CardItem,Button, Thumbnail, Text, Icon, Left,Right, Body,List,ListItem  } from 'native-base';
 //read msg end
 class InboxScreen extends React.Component {
 
@@ -24,64 +24,76 @@ class InboxScreen extends React.Component {
    mapInbox (alist){
     const { navigate } = this.props.navigation;
     
-return alist.map((msg)=> 
+return alist.map((msg)=>
+
+    <ListItem avatar onPress={() => navigate('Message', msg)}>
+      <Left>
+
+        <Thumbnail source={{ uri: msg.iconUrl}} />
+      </Left>
+      <Body>
+      <Text note>{msg.sender}</Text>
+      
+        <Text>{msg.title}</Text>
+        <Text note>{msg.msg.substring(0, 30)}. .</Text>
+      </Body>
+      <Right>
+        <Text note>{msg.date.substring(8,10)}/{msg.date.substring(5,7)}</Text>
+      </Right>
+    </ListItem>
+
+
+/*
 <Button
 transparent textStyle={{color: '#87838B'}}
 onPress={() => navigate('Message', msg)}><Text>{msg.title}</Text></Button>);
-
+   */)
   }
   render() {
 let mappedList = this.mapInbox(msgList);
    
 
-return <View>
+return (
+  <Container>
+  <Content>
+    <List>{mappedList}</List>
+    </Content>
+    </Container>)
    
-   
-    {mappedList}
-    </View>
   }
 }
 
 class ReadMessageScreen extends React.Component {
 
     render() {
-      const {title, msg, sender, date } = this.props.navigation.state.params;
+      const {title, msg, sender, date, iconUrl} = this.props.navigation.state.params;
       
       return (
-        <View>
-<Container>
-<Header />
-<Content>
-  <Card style={{flex: 0}}>
-    <CardItem>
-      <Left>
-        <Thumbnail source={{uri: 'Image URL'}} />
-        <Body>
-          <Text>NativeBase</Text>
-          <Text note>April 15, 2016</Text>
-        </Body>
-      </Left>
-    </CardItem>
-    <CardItem>
-      <Body>
-        <Image source={{uri: 'Image URL'}} style={{height: 200, width: 200, flex: 1}}/>
-        <Text>
-          //Your text here
-        </Text>
-      </Body>
-    </CardItem>
-    <CardItem>
-      <Left>
-        <Button transparent textStyle={{color: '#87838B'}}>
-          <Icon name="logo-github" />
-          <Text>1,926 stars</Text>
-        </Button>
-      </Left>
-    </CardItem>
-  </Card>
-</Content>
-</Container>
-        </View>
+        <Container>
+
+        <Content>
+          <Card>
+            <CardItem header>
+              <Text>{title}</Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text>
+            {msg}
+
+                </Text>
+              </Body>
+            </CardItem>
+            <CardItem footer>
+              <Text>Fra: {sender}</Text>
+              <Text note>  {date.substring(11,16)}</Text> 
+              <Text note>  {date.substring(8,10)}/{date.substring(5,7)}</Text> 
+       
+              
+            </CardItem>
+         </Card>
+        </Content>
+      </Container>
       );
     }
   }
@@ -90,28 +102,10 @@ class ReadMessageScreen extends React.Component {
   export default  StackNav = StackNavigator({
     Inbox: { screen: InboxScreen,
        navigationOptions: {
-        title: 'Home'
+        title: 'Beskeder'
       } },
     Message: { screen: ReadMessageScreen,
       navigationOptions: ({navigation}) => ({
         title: `${navigation.state.params.title}`,
       }) },
   });
-/*
-export const StackNav = StackNavigator({
-  inbox: { screen: InboxScreen, 
- navigationOptions: {
-      title: 'Home'
-    }
-},
-  Message: {screen: ReadMessageScreen,
-    navigationOptions: {
-      title: 'Message'
-    }
-  
-  },
-
-
-});*/
-
-
