@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Card, CardItem, Text, Body } from 'native-base';
-export default class ReadMessageComp extends Component {
-  
-  
+export default class ReadMessageScreen extends Component {
+
+
     render() {
 
 
     return (
-     
+
           <Card>
             <CardItem header>
               <Text>NativeBase</Text>
@@ -23,7 +23,7 @@ export default class ReadMessageComp extends Component {
               <Text>GeekyAnts</Text>
             </CardItem>
          </Card>
-   
+
     );
   }
 }

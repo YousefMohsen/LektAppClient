@@ -9,11 +9,11 @@ import { StackNavigator } from 'react-navigation';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome'
+    title: 'Home'
   };
   render() {
     const { navigate } = this.props.navigation;
-    
+
     return <View>
     <Text>Hello, Navigation!</Text>
     <Button
@@ -30,12 +30,12 @@ class ChatScreen extends React.Component {
     render() {
       return (
         <View>
-          <Text>Chat with Lucy</Text>
+          <Text>Chat with messi</Text>
         </View>
       );
     }
   }
-  
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -44,10 +44,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
   });
-  
+
 
 export default  SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
   Chat: { screen: ChatScreen },
 });
-
