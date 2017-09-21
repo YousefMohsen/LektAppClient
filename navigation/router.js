@@ -5,18 +5,25 @@ import {
 StyleSheet,
 Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import {observer} from 'mobx-react';
 
-let msgList = [{"title":"Lektier til imorgen","msg":"Læs . s. 10 - 277 i Java Software Solutions Eighth edition","sender":"Leo Messi","date":"2017-10-02T12:02:00.000Z", "iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/158023.png"},{"title":"Lektier til på tirsdag","msg":"Læs bogen Sapiens - en kort historie om menneskeheden ","sender":"Thiago","date":"2017-10-13T12:02:00.000Z" ,"iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/189509.png"},{"title":"Aflyst time","msg":"Barcelona spiller imorgen og timen er defor selvfølgelig aflyst","sender":"Xavi","date":"2017-10-02T14:02:00.000Z", "iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/10535.png"},{"title":"Vigtigt!","msg":"Forza Lundtofte Boldklub","sender":"Claus Abildgaard","date":"2017-10-02T12:02:00.000Z", "iconUrl":""}];
+import MessageStore from '../data/MessageStore';
+//let msgList = [{"title":"Lektier til imorgen","msg":"Læs . s. 10 - 277 i Java Software Solutions Eighth edition","sender":"Leo Messi","date":"2017-10-02T12:02:00.000Z", "iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/158023.png"},{"title":"Lektier til på tirsdag","msg":"Læs bogen Sapiens - en kort historie om menneskeheden ","sender":"Thiago","date":"2017-10-13T12:02:00.000Z" ,"iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/189509.png"},{"title":"Aflyst time","msg":"Barcelona spiller imorgen og timen er defor selvfølgelig aflyst","sender":"Xavi","date":"2017-10-02T14:02:00.000Z", "iconUrl":"https://www.fifaindex.com/static/FIFA14/images/players/128/10535.png"},{"title":"Vigtigt!","msg":"Forza Lundtofte Boldklub","sender":"Claus Abildgaard","date":"2017-10-02T12:02:00.000Z", "iconUrl":""}];
 
 //read msg
 import { Container, Header, Content, Card, CardItem,Button, Thumbnail, Text, Icon, Left,Right, Body,List,ListItem  } from 'native-base';
 //read msg end
+@observer
 class InboxScreen extends React.Component {
-
   constructor(){
-    super();
-    this.mapInbox = this.mapInbox.bind(this)
+super();
+//this.props.msgList = MessageStore.msgList;
+    /* MessageStore.request();
     
+    this.props.msgList = MessageStore.msgList;
+    alert(this.props.msgList.length);
+    */
+    this.mapInbox = this.mapInbox.bind(this)
 
   }
 
@@ -50,12 +57,14 @@ onPress={() => navigate('Message', msg)}><Text>{msg.title}</Text></Button>);
    */)
   }
   render() {
-let mappedList = this.mapInbox(msgList);
+let mappedList = this.mapInbox(MessageStore.msgList);
    
 
 return (
   <Container>
   <Content>
+  
+  <Button onPress={MessageStore.changeList}><Text>Update</Text></Button>
     <List>{mappedList}</List>
     </Content>
     </Container>)
